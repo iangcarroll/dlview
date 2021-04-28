@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <p>DLView is a simple tool to retrieve reservation data from DL that is publicly available but not normally visible. You can use this to confirm upgrade certificates have been applied correctly, if something has happened to your reservation, etc.</p>
+    <form method="POST" action="/go">
+        <input class="form-control" type="text" name="fname" placeholder="First Name"><br />
+        <input class="form-control"type="text" name="lname" placeholder="Last Name"><br />
+        <input class="form-control" type="text" name="pnr" placeholder="Confirmation Number (ex. ABC1EF)"><br />
+        <button class="btn btn-lg btn-primary" role="submit">Submit</button>
+    </form><br />
+    <p>Your data is sent only to and from the airline via the tool and is not stored.</p>
+{% endblock %}

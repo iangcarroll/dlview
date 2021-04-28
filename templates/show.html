@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+{% for tag in data.tags %}
+<span class="badge badge-primary">{{ tag }}</span>
+{% endfor %}
+<br /><br />
+<div class="row">
+
+
+    <div class="col">
+        <h2>Passengers</h2>
+        {% for passenger in data.pax%}
+        <h4>{{ passenger['PNR Name'] }}</h4>
+        <table class="table table-sm">
+            {% for key, value in passenger.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                {% if key == "Phantom Segments" and value > 0 %}
+                <td>{{ value }} <span class="badge badge-success">RUC/GUC</span></td>
+                {% else %}
+                <td>{{ value }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% endfor %}
+
+        <h2>Flights</h2>
+        {% for flight in data.flights%}
+        <h4>{{ flight['Origin'] }} -> {{ flight['Destination'] }} <span class="badge badge-primary">{{ flight['Action Code'] }}</span></h4>
+        <table class="table table-sm">
+            {% for key, value in flight.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                {% if value == "Upgrade Eligible" %}
+                    <td>{{ value }} <span class="badge badge-success">RUC/GUC</span></td>
+                {% else %}
+                    <td>{{ value }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% endfor %}
+    </div>
+
+
+    <div class="col">
+        <h2>Remarks</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Remark</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for remark in data.remarks %}
+                    <tr>
+                        <td>{{ remark['type'] }}</td>
+                        {% if remark['ruc'] %}
+                        <td>{{ remark['text'] }} <span class="badge badge-success">RUC/GUC</span></td>
+                        {% else %}
+                        <td>{{ remark['text'] }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Flags</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flag in data.flags %}
+                    <tr>
+                        <td>{{ flag['name'] }}</td>
+                        <td>{{ flag['value'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
